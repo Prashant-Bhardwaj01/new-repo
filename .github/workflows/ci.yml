@@ -1,29 +1,23 @@
-name: CI Pipeline
+name: Python CI
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: 18
+          python-version: 3.11
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install Requirements
+        run: pip install -r requirements.txt
 
-      - name: Build project
-        run: npm run build
-
-      - name: Run tests
-        run: npm test
+      - name: Run App
+        run: python app.py
